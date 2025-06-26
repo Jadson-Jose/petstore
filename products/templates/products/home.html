@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop Premium | Produtos para Seu Pet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #3d8b40;
+            --secondary: #FF9800;
+            --accent: #2196F3;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --danger: #e74c3c;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f9fbfd;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background-color: var(--dark);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .main-header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .search-cart {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-bar {
+            display: flex;
+            width: 400px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--primary);
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-bar button:hover {
+            background: var(--primary-dark);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-categories {
+            background: var(--primary);
+            padding: 12px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .categories {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .categories li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .categories li a:hover {
+            color: #ffeb3b;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #e68a00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Featured Categories */
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-content {
+            padding: 20px;
+        }
+
+        .category-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .category-content p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--danger);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .quick-view {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .product-card:hover .quick-view {
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-description {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 15px;
+            margin-left: 5px;
+        }
+
+        .discount {
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .add-to-cart {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .stock-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .in-stock {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .out-of-stock {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .rating {
+            color: #FFC107;
+            margin-top: 10px;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #bdc3c7;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .newsletter h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 16px;
+        }
+
+        .newsletter-form button {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #1a252f;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: #bdc3c7;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-links i {
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            background: white;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid #2c3e50;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .search-bar {
+                width: 300px;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .categories {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: var(--border-radius);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .hero {
+                padding: 50px 20px;
+            }
+            
+            .hero h2 {
+                font-size: 24px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="tel:+5511999999999"><i class="fas fa-phone"></i> (11) 99999-9999</a>
+                    <a href="mailto:contato@petshop.com"><i class="fas fa-envelope"></i> contato@petshop.com</a>
+                </div>
+                <div class="auth-links">
+                    <a href="#"><i class="fas fa-user"></i> Minha Conta</a>
+                    <a href="#"><i class="fas fa-heart"></i> Favoritos</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-header">
+            <div class="logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 7H16.19C15.74 6.2 15.12 5.5 14.37 5L16 3.41L14.59 2L12.42 4.17C11.96 4.06 11.5 4 11 4S10.04 4.06 9.58 4.17L7.41 2L6 3.41L7.62 5C6.87 5.5 6.26 6.21 5.81 7H3V9H5.09C5.03 9.33 5 9.66 5 10V11H3V13H5V14C5 14.34 5.03 14.67 5.09 15H3V17H5.81C7.26 19.5 10.28 20.61 12.9 19.36C13.36 19.13 13.79 18.84 14.18 18.5C14.39 18.31 14.59 18.11 14.78 17.89C15.31 17.3 15.72 16.59 15.96 15.82C16.25 14.9 16.34 13.94 16.25 13C16.71 12.1 17 11.07 17 10C17 9.61 16.96 9.23 16.91 8.85C16.94 8.57 17 8.29 17 8V7H19M11 6C11.55 6 12 6.45 12 7S11.55 8 11 8 10 7.55 10 7 10.45 6 11 6M8 9H14V10C14 10.57 13.9 11.11 13.73 11.62C13.2 11.23 12.62 10.9 12 10.68C11.09 10.25 10.08 10 9 10C8.68 10 8.37 10.03 8.06 10.05C8 9.72 8 9.37 8 9M7 15V13H9V15H7M15 15V13H17V15H15Z' fill='%234CAF50'/%3E%3C/svg%3E" alt="PetShop Logo">
+                <h1>Pet<span>Premium</span></h1>
+            </div>
+            
+            <div class="search-cart">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar produtos para seu pet...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <a href="#" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="nav-categories">
+            <div class="nav-container">
+                <ul class="categories">
+                    <li><a href="#"><i class="fas fa-dog"></i> Cães</a></li>
+                    <li><a href="#"><i class="fas fa-cat"></i> Gatos</a></li>
+                    <li><a href="#"><i class="fas fa-fish"></i> Peixes</a></li>
+                    <li><a href="#"><i class="fas fa-dove"></i> Pássaros</a></li>
+                    <li><a href="#"><i class="fas fa-paw"></i> Roedores</a></li>
+                    <li><a href="#"><i class="fas fa-percent"></i> Promoções</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Tudo que seu pet precisa em um só lugar!</h2>
+            <p>Alimentos, acessórios, brinquedos e muito mais com entrega rápida e preços imbatíveis</p>
+            <a href="#" class="cta-button">Ver Ofertas Exclusivas <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Categorias em Destaque</h2>
+            <p class="section-subtitle">Encontre tudo que seu pet precisa nas nossas categorias mais populares</p>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-content">
+                    <h3>Rações Premium</h3>
+                    <p>Alimentos de alta qualidade para saúde e vitalidade</p>
+                    <a href="#" class="btn">Ver Produtos</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-content">
+                    <h3>Brinquedos</h3>
+                    <p>Diversão e entretenimento para seu pet</p>
+                    <a href="#" class="btn">Ver Produtos</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-content">
+                    <h3>Acessórios</h3>
+                    <p>Coleiras, guias, roupas e muito mais</p>
+                    <a href="#" class="btn">Ver Produtos</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-content">
+                    <h3>Saúde e Higiene</h3>
+                    <p>Produtos para cuidar da saúde do seu pet</p>
+                    <a href="#" class="btn">Ver Produtos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" style="background-color: #f1f7fc;">
+        <div class="section-header">
+            <h2 class="section-title">Produtos Populares</h2>
+            <p class="section-subtitle">Os produtos mais amados pelos nossos clientes e seus pets</p>
+        </div>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-badge">-15%</div>
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                    <div class="quick-view">Visualização Rápida</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Rações</div>
+                    <h3 class="product-title">Ração Premium para Cães Adultos</h3>
+                    <p class="product-description">Ração super premium com todos os nutrientes essenciais para seu cão</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(128)</span>
+                    </div>
+                    <div class="product-price">
+                        <div>
+                            <span class="price">R$ 149,90</span>
+                            <span class="old-price">R$ 175,90</span>
+                            <div class="discount">15% OFF</div>
+                        </div>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="stock-info">
+                        <span class="in-stock"><i class="fas fa-check-circle"></i> Em estoque</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1583511655826-05700d52f5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                    <div class="quick-view">Visualização Rápida</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Brinquedos</div>
+                    <h3 class="product-title">Brinquedo Macio para Gatos</h3>
+                    <p class="product-description">Brinquedo interativo com catnip para entreter seu felino</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(92)</span>
+                    </div>
+                    <div class="product-price">
+                        <div>
+                            <span class="price">R$ 39,90</span>
+                        </div>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="stock-info">
+                        <span class="in-stock"><i class="fas fa-check-circle"></i> Em estoque</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-badge">NOVO</div>
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                    <div class="quick-view">Visualização Rápida</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Acessórios</div>
+                    <h3 class="product-title">Coleira Antipulgas para Cães</h3>
+                    <p class="product-description">Proteção duradoura contra pulgas e carrapatos por até 8 meses</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(215)</span>
+                    </div>
+                    <div class="product-price">
+                        <div>
+                            <span class="price">R$ 79,90</span>
+                        </div>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="stock-info">
+                        <span class="in-stock"><i class="fas fa-check-circle"></i> Em estoque</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-badge">-25%</div>
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                    <div class="quick-view">Visualização Rápida</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Aquários</div>
+                    <h3 class="product-title">Aquário Completo 50L</h3>
+                    <p class="product-description">Kit completo com filtro, aquecedor, termômetro e iluminação LED</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(64)</span>
+                    </div>
+                    <div class="product-price">
+                        <div>
+                            <span class="price">R$ 399,90</span>
+                            <span class="old-price">R$ 529,90</span>
+                            <div class="discount">25% OFF</div>
+                        </div>
+                        <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="stock-info">
+                        <span class="in-stock"><i class="fas fa-check-circle"></i> Em estoque</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-truck"></i></div>
+                <h3 class="feature-title">Entrega Rápida</h3>
+                <p class="feature-description">Entregamos em todo o Brasil em até 48h para grandes centros</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="feature-title">Compra Segura</h3>
+                <p class="feature-description">Seus dados protegidos com criptografia de última geração</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-undo"></i></div>
+                <h3 class="feature-title">Satisfação Garantida</h3>
+                <p class="feature-description">Trocas e devoluções fáceis em até 30 dias após a compra</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3 class="feature-title">Suporte 24/7</h3>
+                <p class="feature-description">Nossa equipe está sempre pronta para ajudar você e seu pet</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h3>Cadastre-se para Ofertas Exclusivas!</h3>
+            <p>Receba descontos especiais, novidades e dicas para cuidar melhor do seu pet</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Digite seu melhor e-mail">
+                <button type="submit">Cadastrar <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>PetPremium</h4>
+                <p style="color: #bdc3c7; margin-bottom: 20px;">Tudo que seu pet precisa com qualidade, preço justo e entrega rápida.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Institucional</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Sobre Nós</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Nossas Lojas</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Trabalhe Conosco</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Política de Privacidade</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Termos de Uso</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Atendimento</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Central de Ajuda</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Perguntas Frequentes</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Entregas e Prazos</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Trocas e Devoluções</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Fale Conosco</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Formas de Pagamento</h4>
+                <div class="payment-methods">
+                    <span class="payment-method">Cartão de Crédito</span>
+                    <span class="payment-method">PIX</span>
+                    <span class="payment-method">Boleto</span>
+                    <span class="payment-method">Débito</span>
+                    <span class="payment-method">PayPal</span>
+                </div>
+                
+                <h4 style="margin-top: 30px;">Certificados de Segurança</h4>
+                <div style="margin-top: 15px;">
+                    <img src="https://via.placeholder.com/100x40?text=SSL" alt="SSL" style="margin-right: 10px;">
+                    <img src="https://via.placeholder.com/100x40?text=Google+Safe" alt="Google Safe">
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 PetPremium - Todos os direitos reservados. CNPJ: 12.345.678/0001-99</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality for demonstration
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const cartCount = document.querySelector('.cart-count');
+                let count = parseInt(cartCount.textContent);
+                cartCount.textContent = count + 1;
+                
+                // Animation effect
+                this.style.backgroundColor = '#2ecc71';
+                setTimeout(() => {
+                    this.style.backgroundColor = '#4CAF50';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

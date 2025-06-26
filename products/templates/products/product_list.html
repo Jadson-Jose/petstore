@@ -1,0 +1,55 @@
+
+{% block content %}
+<h1>Produtos para Pets</h1>
+
+<!-- Filtro por Categorias -->
+<div class="categories">
+    <h2>Categorias</h2>
+    <ul>
+        {% for cat in view.get_queryset.0.category.get_queryset %}
+            <li>
+                <a href="{% url 'category_products' cat.id %}">
+                    {{ cat.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Lista de Produtos -->
+<div class="products">
+    {% for product in products %}
+        <div class="product-card">
+            <a href="{% url 'products:product_detail' product.pk %}">
+                <h3>{{ product.name }}</h3>
+            </a>
+            <p>Preço: R$ {{ product.price }}</p>
+            <p>{{ product.description|truncatechars:100 }}</p>
+            {% if product.stock > 0 %}
+                <span class="in-stock">Em estoque</span>
+            {% else %}
+                <span class="out-of-stock">Esgotado</span>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Nenhum produto encontrado.</p>
+    {% endfor %}
+</div>
+
+<!-- Paginação -->
+{% if is_paginated %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+        
+        <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

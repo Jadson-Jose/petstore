@@ -1,0 +1,14 @@
+<div class="nav-categories">
+    <div class="nav-container">
+        <ul class="categories">
+            {% for category in categories %}
+            <li>
+                <a href="{% url 'category_products' category.id %}">
+                    <i class="{{ category.icon_class }}"></i> {{ category.name }}
+                </a>
+            </li>
+            {% endfor %}
+            <li><a href="{% url 'promotions' %}"><i class="fas fa-percent"></i> Promoções</a></li>
+        </ul>
+    </div>
+</div>
