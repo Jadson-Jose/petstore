@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% include "global/partials/meta.html" %}
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    {% include "global/partials/styles.html" %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% include "global/partials/header.html" %}
+    {% include "global/partials/navigation.html" %}
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% include "global/partials/footer.html" %}
+    
+    {% include "global/partials/scripts.html" %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

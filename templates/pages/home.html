@@ -1,0 +1,45 @@
+{% extends "global/base.html" %}
+
+{% block title %}Página Inicial | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Tudo que seu pet precisa em um só lugar!</h2>
+            <p>Alimentos, acessórios, brinquedos e muito mais com entrega rápida e preços imbatíveis</p>
+            <a href="{% url 'products:list' %}" class="cta-button">Ver Ofertas Exclusivas <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    {% include "pages/partials/categories.html" %}
+
+    <!-- Products Section -->
+    {% include "pages/partials/featured_products.html" %}
+
+    <!-- Features Section -->
+    {% include "pages/partials/features.html" %}
+
+    <!-- Newsletter -->
+    {% include "pages/partials/newsletter.html" %}
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Script específico da home
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const cartCount = document.querySelector('.cart-count');
+                let count = parseInt(cartCount.textContent);
+                cartCount.textContent = count + 1;
+                
+                // Animation effect
+                this.style.backgroundColor = '#2ecc71';
+                setTimeout(() => {
+                    this.style.backgroundColor = '#4CAF50';
+                }, 500);
+            });
+        });
+    </script>
+{% endblock %}

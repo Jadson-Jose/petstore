@@ -1,0 +1,19 @@
+<section class="section">
+    <div class="section-header">
+        <h2 class="section-title">Categorias em Destaque</h2>
+        <p class="section-subtitle">Encontre tudo que seu pet precisa nas nossas categorias mais populares</p>
+    </div>
+    
+    <div class="categories-grid">
+        {% for category in featured_categories %}
+        <div class="category-card">
+            <div class="category-img" style="background-image: url('{{ category.image.url }}');"></div>
+            <div class="category-content">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description }}</p>
+                <a href="{% url 'products:category' slug=category.slug %}" class="btn">Ver Produtos</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

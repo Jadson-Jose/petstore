@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import CategoryProductListView, ProductListView, ProductDetailView
-from .views import home
+from . import views
+
+app_name = 'products'  # 🔑 NAMESPACE CRÍTICO
 
 urlpatterns = [
-    path("", home, name="home"),
-    path("produtos/", ProductListView.as_view(), name="product_list"),
-    path("produtos/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
-    path("categoria/<int:category_id>/", CategoryProductListView.as_view(), name="category_products",),
+    path('', views.product_list, name='list'),
+    path('<slug:slug>/', views.product_detail, name='detail'),
+    # Adicione outras URLs do app products aqui
 ]
