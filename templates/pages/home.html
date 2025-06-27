@@ -1,14 +1,35 @@
-{% extends "global/base.html" %}
-
-{% block title %}Página Inicial | {{ block.super }}{% endblock %}
-
 {% block content %}
     <!-- Hero Banner -->
     <section class="hero">
         <div class="hero-content">
-            <h2>Tudo que seu pet precisa em um só lugar!</h2>
+            <h1>Tudo que seu pet precisa em um só lugar!</h1>
             <p>Alimentos, acessórios, brinquedos e muito mais com entrega rápida e preços imbatíveis</p>
-            <a href="{% url 'products:list' %}" class="cta-button">Ver Ofertas Exclusivas <i class="fas fa-arrow-right"></i></a>
+            <a href="{% url 'products:list' %}" class="cta-button" aria-label="Ver ofertas exclusivas para pets">
+                Ver Ofertas Exclusivas 
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number" data-target="15000">0</span>
+                <div class="stat-label">Pets Felizes</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="500">0</span>
+                <div class="stat-label">Produtos Disponíveis</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="98">0</span>
+                <div class="stat-label">% Satisfação</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="24">0</span>
+                <div class="stat-label">Horas Entrega</div>
+            </div>
         </div>
     </section>
 
@@ -23,23 +44,10 @@
 
     <!-- Newsletter -->
     {% include "pages/partials/newsletter.html" %}
-{% endblock %}
 
-{% block extra_js %}
-    <script>
-        // Script específico da home
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const cartCount = document.querySelector('.cart-count');
-                let count = parseInt(cartCount.textContent);
-                cartCount.textContent = count + 1;
-                
-                // Animation effect
-                this.style.backgroundColor = '#2ecc71';
-                setTimeout(() => {
-                    this.style.backgroundColor = '#4CAF50';
-                }, 500);
-            });
-        });
-    </script>
+    <!-- Success Message for Cart -->
+    <div class="cart-success" id="cartSuccess">
+        <i class="fas fa-check-circle"></i>
+        Produto adicionado ao carrinho!
+    </div>
 {% endblock %}

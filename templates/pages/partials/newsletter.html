@@ -2,7 +2,7 @@
     <div class="newsletter-content">
         <h3>Cadastre-se para Ofertas Exclusivas!</h3>
         <p>Receba descontos especiais, novidades e dicas para cuidar melhor do seu pet</p>
-        <form class="newsletter-form" method="post" action="{% url 'newsletter:subscribe' %}">
+        <form class="newsletter-form" method="post" action="#">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Digite seu melhor e-mail" required>
             <button type="submit">Cadastrar <i class="fas fa-paper-plane"></i></button>
