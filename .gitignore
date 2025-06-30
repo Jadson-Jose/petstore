@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Django-specific
+db.sqlite3
+media/
+static_root/ # Or whatever your COLLECTSTATIC_DIRS is set to
+local_settings.py # If you have a separate file for local settings/secrets
+
+# IDE-specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Other generated files
+*.pot # Gettext translation files
