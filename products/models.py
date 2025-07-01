@@ -1,7 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField("Nome", max_length=255)
+    name = models.CharField("Nome", max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -13,14 +13,14 @@ class Category(models.Model):
         return self.name
     
 class Product(models.Model):
-    name = models.CharField("Nome", max_length=255)
+    name = models.CharField("Nome", max_length=255, blank=False, unique=True)
     description = models.TextField("Descrição")
     price = models.DecimalField("Preço", max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField("Estoque")
     category = models.ForeignKey(Category,
                                  verbose_name="Categoria",
                                  on_delete=models.CASCADE, 
-                                 related_name='products'
+                                 related_name="products"
                                 )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -31,5 +31,5 @@ class Product(models.Model):
         verbose_name_plural = "Produtos"
         ordering = ['-created_at']
         
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
