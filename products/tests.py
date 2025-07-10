@@ -56,25 +56,17 @@ class ProductModelTest(TestCase):
     def test_product_str_method(self):
         self.assertEqual(str(self.product), "Ração para cães")
         
-    # def test_produc_name_blank_validation(self):
-    #     with self.assertRaises(ValidationError):
-    #         product = Product(
-    #             name="",
-    #             price=Decimal('10.00'),
-    #             stock=10,
-    #             category=self.category
-    #         )
-
-    #         # DEBUG DO TEST
-    #         # try:
-    #         #     product.full_clean()
-    #         #     print("✅ full_clean() passou sem erro - nome vazio é permitido")
-    #         #     product.save()
-    #         #     print("✅ save() passou sem erro")
-    #         # except ValidationError as e:
-    #         #     print(f"❌ ValidationError capturado: {e}")
-    #         #     raise
+class ProductModelExtraTest(TestCase):
+    def setUp(self):
+        self.cat = Category.objects.create(name="Teste")
         
-    #     product.full_clean()
-        
-                    
+    def test_name_black_validation(self):
+        product = Product(
+            name="",
+            description="Algo",
+            price=Decimal("5.00"),
+            stock=1,
+            category=self.cat
+        )
+        with self.assertRaises(ValidationError):
+            product.full_clean()
