@@ -1,8 +1,15 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.contrib.auth.models import User
 from decimal import Decimal
 from django.utils import timezone
 from orders.models import Order, OrderStatus, PaymentMethod
+from datetime import datetime
+import uuid
+
+from products.models import Product, Category
+from orders.models import Order, OrderItem, OrderStatus, PaymentMethod
+
 
 
 class OrderModelTest(TestCase):
@@ -144,3 +151,115 @@ class OrderModelTest(TestCase):
             order.save()
             order.refresh_from_db()
             self.assertEqual(order.status, status)
+            
+            
+
+# Test Order Items
+class OrderItemModelTest(TestCase):
+    """Test cases for OrdeItem model"""
+    
+    def setUp(self):
+        self.user = User.objects.create(
+            username='testuser',
+            email='test@example.com',
+            password='testpass123'
+        )
+        
+        self.category = Category.objects.create(name='Test Category')
+        
+        # Create products
+        self.product1 = Product.objects.create(
+            name='Test Product',
+            price=Decimal('99.99'),
+            stock=10,
+            category=self.category
+        )
+        
+        self.product2 = Product.objects.create(
+            name='Test Product 2',
+            description='Another test product',
+            price=Decimal('49.99'),
+            stock=5,
+            category=self.category
+        )
+        
+        
+        # Create order
+        self.order = Order.objects.create(
+            user=self.user,
+            status=OrderStatus.PENDENTE,
+            total=Decimal('199.98'),
+            shipping_address='Rua Test, 123, São Paulo, SP',
+            payment_method=PaymentMethod.PIX
+        )
+        
+        # Base order item data
+        self.order_item_data = {
+            'order':self.order,
+            'product':self.product1,
+            'quantity': 2,
+            'unit_price': self.product1.price
+        }
+    
+    def test_order_item_creation(self):
+        """Test basic order item creation"""
+        item = OrderItem.objects.create(**self.order_item_data)
+        
+        # Test field values
+        self.assertIsInstance(item.id, uuid.UUID)
+        self.assertEqual(item.order, self.order)
+        self.assertEqual(item.product, self.product1)
+        self.assertEqual(item.quantity, 2)
+        self.assertEqual(item.unit_price, Decimal('99.99'))
+        
+        # Test timestamps
+        self.assertLessEqual(item.created_at, item.updated_at)
+        
+        # Test that create_at and updated_at are closed (since both user auto_now=True)
+        self.assertIsInstance(item.created_at, datetime)
+        self.assertIsInstance(item.updated_at, datetime)
+        time_diff = abs((item.updated_at - item.created_at).total_seconds())
+        self.assertLess(time_diff, 1)
+        self.assertGreaterEqual(item.updated_at, item.created_at)
+        
+    def test_order_item_uuid_uniqueness(self):
+        """Test that each OrderItem gets a unique UUID"""
+        item1 = OrderItem.objects.create(**self.order_item_data)
+        
+        # Create second item with different product
+        item_data2 = self.order_item_data.copy()
+        item_data2['product'] = self.product2
+        item2 = OrderItem.objects.create(**item_data2)
+        
+        self.assertNotEqual(item1.id, item2.id)
+        self.assertIsInstance(item1.id, uuid.UUID)
+        self.assertIsInstance(item2.id, uuid.UUID)
+        
+    def test_order_item_str_representation(self):
+        """Test order item sring representation"""
+        item = OrderItem.objects.create(**self.order_item_data)
+        # Note: The original model has a typo "Product" instead of "Product"
+        expected_str = f"2x Product {self.product1.id} (Order {self.order.id})"
+        self.assertEqual(str(item), expected_str)
+        
+    def test_order_item_repr_representation(self):
+        item = OrderItem.objects.create(**self.order_item_data)
+        # Note: The original model has missing space in repr
+        expected_repr = f"<OrderItem: {item.id}>"
+        self.assertEqual(repr(item), expected_repr)
+    
+    def test_quantity_positive_integer_validation(self):
+        # Test valid quantities
+        valid_quantities = [1, 5, 10, 100, 150]
+        for quantity in valid_quantities:
+            item = OrderItem(
+                order=self.order,
+                product=self.product1,
+                quantity=quantity,
+                unit_price=self.product1.price
+            )
+            try:
+                item.full_clean()
+            except ValidationError as e:
+                self.fail(f"Quantidade {quantity} deveri ser válida. Erro {e}")
+         
