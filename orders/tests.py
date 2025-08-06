@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -262,4 +263,70 @@ class OrderItemModelTest(TestCase):
                 item.full_clean()
             except ValidationError as e:
                 self.fail(f"Quantidade {quantity} deveri ser válida. Erro {e}")
+                
+    def test_quantity_validation(self):
+        """Test quantity validation (minimum value)"""
+        item_data = self.order_item_data.copy()
+        item_data['quantity'] = 0 # Invalid: below minimum
+        
+        item = OrderItem(**item_data)
+        with self.assertRaises(ValidationError):
+            item.full_clean()
+            
+    def test_unit_price_validation(self):
+        """Test unit price validation (minimum value)"""
+        item_data = self.order_item_data.copy()
+        item_data['unit_price'] = Decimal('0.00') # Invalid: below minimum
+        
+        item = OrderItem(**item_data)
+        with self.assertRaises(ValidationError):
+            item.full_clean()
+            
+    def test_subtotal_property(self):
+        item = OrderItem.objects.create(**self.order_item_data)
+        expected_subtotal = Decimal('2') * Decimal('99.99') # Quantity * unit_price
+        self.assertEqual(item.subtotal, expected_subtotal)
+        
+    def test_unique_together_constraint(self):
+        """Test unique together constraint (order, product)"""
+        # Create first item
+        OrderItem.objects.create(**self.order_item_data)
+        
+        # Try to cretate duplicate item (same order, same product)
+        with self.assertRaises(IntegrityError):
+            OrderItem.objects.create(**self.order_item_data)
+            
+    def test_order_item_save_updates_order_total(self):
+        # Initial order total
+        inital_total = self.order.total
+        
+        # Create order item
+        item = OrderItem.objects.create(**self.order_item_data)
+        self.order.refresh_from_db()
+        expected_total = item.subtotal
+        self.assertEqual(self.order.total, expected_total)
+        
+        
+    def test_multiple_order_items_total_calculation(self):
+        item1 = OrderItem.objects.create(**self.order_item_data)
+        
+        product2 = Product.objects.create(
+            name='Test Product 2 - unique',
+            description='Another test product',
+            price=Decimal('25.00'),
+            stock=5,
+            category=self.category
+        )
+        
+        item2 = OrderItem.objects.create(
+            order=self.order,
+            product=product2,
+            quantity=3,
+            unit_price=Decimal('25.00')
+        )
+        
+        self.order.refresh_from_db()
+        
+        expected_total = item1.subtotal + item2.subtotal
+        self.assertEqual(self.order.total, expected_total)
          

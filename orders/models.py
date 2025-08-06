@@ -194,7 +194,7 @@ class OrderItem(models.Model):
         """Calculate subtotal for this item"""
         return self.quantity * self.unit_price
     
-    def savea(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         """Override save to update order total when item changes"""
         super().save(*args, **kwargs)
         
