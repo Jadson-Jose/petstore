@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.utils import timezone
 from decimal import Decimal
@@ -32,7 +32,7 @@ class Order(models.Model):
     
     # Relacionamento com User (pode ser costumizado para seu modelo de usuátio)
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT, # PROTECT evita exclusão acidental
         related_name='pedidos',
         verbose_name="Usuário",
