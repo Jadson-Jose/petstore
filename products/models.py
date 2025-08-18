@@ -1,4 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+
+class ProductStatus(models.TextChoices):
+    PENDENTE = 'pendente', 'Pendente'
+    APROVADO = 'aprovado', 'Aprovado'
+    REJEITADO = 'rejeitado', 'Rejeitado'
 
 class Category(models.Model):
     name = models.CharField("Nome", max_length=255, unique=True)
@@ -17,11 +24,18 @@ class Product(models.Model):
     description = models.TextField("Descrição")
     price = models.DecimalField("Preço", max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField("Estoque")
-    category = models.ForeignKey(Category,
-                                 verbose_name="Categoria",
-                                 on_delete=models.CASCADE, 
-                                 related_name="products"
-                                )
+    image = models.ImageField(upload_to='products/images/', blank=True, null=True)
+    category = models.ForeignKey(
+        Category,
+        verbose_name="Categoria",
+        on_delete=models.CASCADE, 
+        related_name="products"
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=ProductStatus.choices,
+        default=ProductStatus.PENDENTE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
