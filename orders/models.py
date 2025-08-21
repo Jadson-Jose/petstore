@@ -99,7 +99,7 @@ class Order(models.Model):
         ]
         
     def __str__(self):
-        return f"Pedido {self.id} - {self.user.username} - {self.get_status_display()}"
+        return f"Pedido {self.id} - {self.user.full_name} - {self.get_status_display()}"
     
     def __repr__(self):
         return f"<Pedido: {self.id}>"
