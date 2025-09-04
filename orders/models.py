@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from numbers import Integral
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator
@@ -104,6 +106,7 @@ class Order(models.Model):
     def __repr__(self):
         return f"<Pedido: {self.id}>"
     
+    
     @property
     def pode_cancelar(self):
         """Verifica se o pedido pode ser cancelado"""
@@ -118,6 +121,13 @@ class Order(models.Model):
     def calculate_total(self):
         return sum(item.subtotal for item in self.items.all())
     
+class StrictPositiveIntegerField(models.PositiveIntegerField):
+    def to_python(self, value):
+        # Verifica se é um float não-inteiro antes da conversão
+        if isinstance(value, float) and not value.is_integer():
+            raise ValidationError('A quantidade deve ser um número inteiro.')
+        return super().to_python(value)
+
 class OrderItem(models.Model):
     """
     Individual items within an order
@@ -146,7 +156,7 @@ class OrderItem(models.Model):
         help_text="Pedido do produto"
     )
     
-    quantity = models.PositiveIntegerField(
+    quantity = StrictPositiveIntegerField(
         validators=[MinValueValidator(1)],
         verbose_name="Quantidade",
         help_text="Quantidade de produto no pedido"
@@ -201,4 +211,4 @@ class OrderItem(models.Model):
         # Optionally update order total automatically
         self.order.total = self.order.calculate_total()
         self.order.save()
-    
+        

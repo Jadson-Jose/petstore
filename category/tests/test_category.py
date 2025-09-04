@@ -1,9 +1,7 @@
 from django.test import TestCase
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError
 from django.urls import reverse
-from django.utils.text import slugify
-from .models import Category
+
+from products.models import Category
 
 
 class CategoryModelTest(TestCase):

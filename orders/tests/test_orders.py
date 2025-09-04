@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from decimal import Decimal
 from django.utils import timezone
-from orders.models import Order, OrderStatus, PaymentMethod
 from datetime import datetime
 import uuid
 
@@ -332,3 +331,68 @@ class OrderItemModelTest(TestCase):
         expected_total = item1.subtotal + item2.subtotal
         self.assertEqual(self.order.total, expected_total)
          
+         
+class OrderItemModelTest(TestCase):
+    
+    @classmethod
+    def setUpTestData(cls):
+        # 1) cria um usuário (custom user pode exigir outros campos)
+        cls.user = User.objects.create_user(
+            email='testuser@example.com',
+            full_name='Jadson Silva',
+            password='password123',
+        )
+
+        # 2) cria uma categoria para vincular ao produto
+        cls.category = Category.objects.create(name='Teste Categoria')
+
+        # 3) cria o pedido com todos os campos obrigatórios
+        cls.order = Order.objects.create(
+            user             = cls.user,
+            status           = OrderStatus.PENDENTE,
+            total            = Decimal('0.01'),
+            shipping_address = "Rua Exemplo, 123",
+            payment_method   = PaymentMethod.PIX,
+        )
+
+        # 4) cria o produto preenchendo *tudo* que não aceita NULL
+        cls.product1 = Product.objects.create(
+            name        = "Produto X",
+            description = "Descrição do Produto X",
+            price       = Decimal('50.00'),
+            stock       = 10,
+            category    = cls.category,
+            # status, image e is_active têm defaults, então não são obrigatórios
+        )
+        
+    def test_quantity_positive_integer_validation(self):
+       """
+       Não deve lançar ValidationError para quantidades inteiras positivas.
+       """
+       valid_quantities = [1, 5, 10, 100, 150]
+       for qty in valid_quantities:
+           item = OrderItem(
+               order      = self.order,
+               product    = self.product1,
+               quantity   = qty,
+               unit_price = self.product1.price,
+           )
+           try:
+               item.full_clean()
+           except ValidationError as e:
+               self.fail(f"Quantidade {qty} deveria ser válida, mas falhou: {e}")
+
+    def test_quantity_zero_negative_or_non_integer_raises(self):
+        """
+        Deve lançar ValidationError para 0, negativos e não-inteiros.
+        """
+        invalid_quantities = [0, -1, -10, 2.5, "dez"]
+        for qty in invalid_quantities:
+            item = OrderItem(
+                order      = self.order,
+                product    = self.product1,
+                quantity   = qty,
+                unit_price = self.product1.price,
+            )
+            with self.assertRaises(ValidationError, msg=f"Quantidade {qty} deveria falhar"):
+                item.full_clean()

@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from decimal import Decimal
-from .models import Category, Product
 from django.db import IntegrityError, transaction
+
+from products.models import Category, Product
 
 class CategoryModelTest(TestCase):
     def setUp(self):
